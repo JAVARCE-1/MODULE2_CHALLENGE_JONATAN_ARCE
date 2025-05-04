@@ -9,7 +9,6 @@ namespace MODULE2_CHALLENGE_JONATAN_ARCE.Modelos
 {
     public class Cita
     {
-
         public int id {  get; private set; }
         public string Motivo { get; set; }
         public string FechaCita { get; set; }
