@@ -18,6 +18,8 @@ namespace MODULE2_CHALLENGE_JONATAN_ARCE.Repositories
 
         Cita GetByQuotesForPatientID(int patientID);
 
+        List<Cita> GetByListQuotesForPatientID(int patientID);
+
 
     }
 }

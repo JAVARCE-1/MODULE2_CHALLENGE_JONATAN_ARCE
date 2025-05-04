@@ -36,6 +36,11 @@ namespace MODULE2_CHALLENGE_JONATAN_ARCE.Repositories
             return _quotes.FirstOrDefault(x => x.IdCita == id);
         }
 
+        public List<Cita> GetByListQuotesForPatientID(int patientID)
+        {
+            return _quotes.Where(x => x.IdPaciente == patientID).ToList();
+        }
+
         public Cita GetByQuotesForDentistID(int dentistID)
         {
             return _quotes.FirstOrDefault(x => x.idOdontologo == dentistID);
