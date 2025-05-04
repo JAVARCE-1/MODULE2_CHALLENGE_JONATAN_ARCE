@@ -32,7 +32,7 @@ namespace MODULE2_CHALLENGE_JONATAN_ARCE.Repositories
             return _dentist.FirstOrDefault(x => x.Id == id);
         }
 
-        public Odontologo GetByNumeroExpediente(string numeroCOP)
+        public Odontologo GetByNumeroCop(string numeroCOP)
         {
             return _dentist.FirstOrDefault(x => x.numeroCOP == numeroCOP);
         }

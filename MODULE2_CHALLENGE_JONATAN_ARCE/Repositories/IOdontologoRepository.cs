@@ -10,9 +10,11 @@ namespace MODULE2_CHALLENGE_JONATAN_ARCE.Repositories
 {
     public interface IOdontologoRepository : IRepository<Odontologo>
     {
-        Odontologo GetByNumeroExpediente(string numeroCOP);
+        Odontologo GetByNumeroCop(string numeroCOP);
 
         Odontologo GetByTypeDentist(TipoOdontologo typeDentist);
+
+        
 
     }
 
