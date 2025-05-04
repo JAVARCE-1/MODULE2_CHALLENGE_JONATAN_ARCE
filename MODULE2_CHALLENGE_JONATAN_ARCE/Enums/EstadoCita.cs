@@ -6,10 +6,11 @@ using System.Threading.Tasks;
 
 namespace MODULE2_CHALLENGE_JONATAN_ARCE.Enums
 {
-    public enum EspecialidadOdontologo
+    public enum EstadoCita
     {
-        OdontologoGeneral,
-        Especialista
-
+        Programado,
+        Postergado,
+        Terminado,
+        Anulado
     }
 }
