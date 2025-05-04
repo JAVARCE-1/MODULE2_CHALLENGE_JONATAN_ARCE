@@ -26,14 +26,19 @@ namespace MODULE2_CHALLENGE_JONATAN_ARCE.Repositories
             return _quotes.ToList();
         }
 
-        public Cita GetByDateQuotes(DateTime fechaCita)
+        public List<Cita> GetByDateQuotes(DateTime fechaCita)
         {
-            return _quotes.FirstOrDefault(x => x.FechaCita == fechaCita);
+            return _quotes.Where(x => x.FechaCita == fechaCita).ToList();
         }
 
         public Cita GetById(int id)
         {
             return _quotes.FirstOrDefault(x => x.IdCita == id);
+        }
+
+        public List<Cita> GetByListQuotesForDentistID(int dentistID)
+        {
+            return _quotes.Where(x => x.idOdontologo == dentistID).ToList();
         }
 
         public List<Cita> GetByListQuotesForPatientID(int patientID)
@@ -46,14 +51,9 @@ namespace MODULE2_CHALLENGE_JONATAN_ARCE.Repositories
             return _quotes.FirstOrDefault(x => x.idOdontologo == dentistID);
         }
 
-        public Cita GetByQuotesForPatientID(int patientID)
+        public List<Cita> GetByStatusQuotes(EstadoCita estadoCita)
         {
-            return _quotes.FirstOrDefault(x => x.IdPaciente == patientID);
-        }
-
-        public Cita GetByStatusQuotes(EstadoCita estadoCita)
-        {
-            return _quotes.FirstOrDefault(x => x.EstadoCita == estadoCita);
+            return _quotes.Where(x => x.EstadoCita == estadoCita).ToList();
         }
 
         public void Update(Cita entity)

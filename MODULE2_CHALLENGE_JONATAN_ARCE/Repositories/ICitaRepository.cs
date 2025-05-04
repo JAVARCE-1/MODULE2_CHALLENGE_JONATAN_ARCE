@@ -10,15 +10,15 @@ namespace MODULE2_CHALLENGE_JONATAN_ARCE.Repositories
 {
     public interface ICitaRepository : IRepository<Cita>
     {
-        Cita GetByDateQuotes(DateTime fechaCita);
+        List<Cita> GetByDateQuotes(DateTime fechaCita);
 
-        Cita GetByStatusQuotes(EstadoCita estadoCita);
+        List<Cita> GetByStatusQuotes(EstadoCita estadoCita);
 
         Cita GetByQuotesForDentistID(int dentistID);
 
-        Cita GetByQuotesForPatientID(int patientID);
-
         List<Cita> GetByListQuotesForPatientID(int patientID);
+
+        List<Cita> GetByListQuotesForDentistID(int dentistID);
 
 
     }
