@@ -1,4 +1,5 @@
-﻿using MODULE2_CHALLENGE_JONATAN_ARCE.Modelos;
+﻿using MODULE2_CHALLENGE_JONATAN_ARCE.Enums;
+using MODULE2_CHALLENGE_JONATAN_ARCE.Modelos;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,7 +24,7 @@ namespace MODULE2_CHALLENGE_JONATAN_ARCE.Repositories
 
         public List<Odontologo> GetAll()
         {
-            return _dentist;
+            return _dentist.ToList();
         }
 
         public Odontologo GetById(int id)
@@ -34,6 +35,11 @@ namespace MODULE2_CHALLENGE_JONATAN_ARCE.Repositories
         public Odontologo GetByNumeroExpediente(string numeroCOP)
         {
             return _dentist.FirstOrDefault(x => x.numeroCOP == numeroCOP);
+        }
+
+        public Odontologo GetByTypeDentist(TipoOdontologo typeDentist)
+        {
+            return _dentist.FirstOrDefault(x => x.Especialidad == typeDentist);
         }
 
         public void Update(Odontologo entity)
