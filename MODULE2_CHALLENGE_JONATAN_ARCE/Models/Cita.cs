@@ -9,9 +9,9 @@ namespace MODULE2_CHALLENGE_JONATAN_ARCE.Modelos
 {
     public class Cita
     {
-        public int id {  get; private set; }
+        public int IdCita {  get; private set; }
         public string Motivo { get; set; }
-        public string FechaCita { get; set; }
+        public DateTime FechaCita { get; set; }
         public int IdPaciente { get; set; }
         public int idOdontologo { get; set; }
         public EstadoCita EstadoCita { get; set; } = EstadoCita.Programado;
