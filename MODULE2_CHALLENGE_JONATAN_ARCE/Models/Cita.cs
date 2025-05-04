@@ -12,11 +12,11 @@ namespace MODULE2_CHALLENGE_JONATAN_ARCE.Modelos
         public int IdCita {  get; private set; }
         public string Motivo { get; set; }
         public DateTime FechaCita { get; set; }
-        public int IdPaciente { get; set; }
-        public int idOdontologo { get; set; }
+        public int? IdPaciente { get; set; }
+        public int? idOdontologo { get; set; }
         public EstadoCita EstadoCita { get; set; } = EstadoCita.Programado;
         public decimal CostoCita { get; set; }
-        public string FechaUpdate { get; set; }
+        public DateTime FechaUpdate { get; set; }
 
         public List<string> Comentarios { get; set; }
         public List<string> Diagnostico { get; set; }

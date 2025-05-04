@@ -11,6 +11,7 @@ namespace MODULE2_CHALLENGE_JONATAN_ARCE.Enums
         Programado,
         Postergado,
         Terminado,
-        Anulado
+        Anulado,
+        Pendiente
     }
 }
