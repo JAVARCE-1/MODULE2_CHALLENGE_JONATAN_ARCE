@@ -25,7 +25,7 @@ namespace MODULE2_CHALLENGE_JONATAN_ARCE.Repositories
                 FechaNacimiento = new DateTime(1988, 1, 1),
                 Telefono = "9995433",
                 Email = "pedro@correo",
-                NumeroExpediente = "001"
+                NumeroExpediente = "E001"
             });
 
             _patient.Add(new Paciente()
@@ -36,7 +36,7 @@ namespace MODULE2_CHALLENGE_JONATAN_ARCE.Repositories
                 FechaNacimiento = new DateTime(2002, 2, 2),
                 Telefono = "90949303",
                 Email = "maria@correo",
-                NumeroExpediente = "002",
+                NumeroExpediente = "E002",
                 IsRecurrente=true
             });
 
@@ -48,8 +48,20 @@ namespace MODULE2_CHALLENGE_JONATAN_ARCE.Repositories
                 FechaNacimiento = new DateTime(1988, 6, 11),
                 Telefono = "6565645",
                 Email = "jose@correo",
-                NumeroExpediente = "003"
+                NumeroExpediente = "E003"
             });
+
+            _patient.Add(new Paciente()
+            {
+                NombreCompleto = "Paciente 4 ",
+                Dni = "43556000",
+                Sexo = Sexo.Femenino,
+                FechaNacimiento = new DateTime(1982, 7, 11),
+                Telefono = "6005645",
+                Email = "pp4@correo",
+                NumeroExpediente = "E004"
+            });
+
         }
 
 

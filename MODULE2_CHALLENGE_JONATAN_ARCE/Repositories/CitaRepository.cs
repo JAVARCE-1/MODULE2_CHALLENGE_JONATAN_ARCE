@@ -17,23 +17,47 @@ namespace MODULE2_CHALLENGE_JONATAN_ARCE.Repositories
             _quotes.Add(new Cita()
             {
                 Motivo = "Limpiezas dentales",
-                FechaCita = new DateTime(2024, 5, 15, 14, 30, 0),  // 15/05/2023 14:30:00
+                FechaCita = new DateTime(2025, 5, 15, 14, 30, 0),  // 15/05/2023 14:30:00
                 IdPaciente = 1,
                 idOdontologo = 1,
-                CostoCita = 100.00m,
+                CostoCita = 80.00m,
                 Comentarios= new List<string> { "Es su Primera cita"  }
             });
 
             _quotes.Add(new Cita()
             {
                 Motivo = "Ajuste de brackets ",
-                FechaCita = new DateTime(2024, 5, 14, 14, 30, 0),  
+                FechaCita = new DateTime(2025, 5, 14, 15, 30, 0),  
                 IdPaciente = 2,
                 idOdontologo = 2,
                 CostoCita = 250.00m,
                 Comentarios = new List<string> { "Primer comentario", "Segundo comentario" }
             });
 
+
+            _quotes.Add(new Cita()
+            {
+                Motivo = "Ajuste de brackets y limpieza bucal",
+                FechaCita = new DateTime(2025, 5, 16, 11, 30, 0),
+                IdPaciente = 3,
+                idOdontologo = 2,
+                CostoCita = 250.00m,
+                Comentarios = new List<string> { "Primer comentario", "Segundo comentario" }
+            });
+
+
+            _quotes.Add(new Cita()
+            {
+                Motivo = "Extracciones dentales",
+                FechaCita = new DateTime(2024, 5, 18, 14, 30, 0),
+                IdPaciente = 4,
+                idOdontologo = 1,
+                CostoCita = 110.00m,
+                Comentarios = new List<string> { "Primer comentario", "Segundo comentario" },
+                EstadoCita =EstadoCita.Terminado,
+                Recomendaciones = new List<string> { "1 se recomienda lavarse los dientes diariamente" }
+
+            });
         }
 
         public void Add(Cita entity)
@@ -53,7 +77,7 @@ namespace MODULE2_CHALLENGE_JONATAN_ARCE.Repositories
 
         public List<Cita> GetByDateQuotes(DateTime fechaCita)
         {
-            return _quotes.Where(x => x.FechaCita == fechaCita).ToList();
+            return _quotes.Where(x => x.FechaCita >= fechaCita).ToList();
         }
 
         public Cita GetById(int id)

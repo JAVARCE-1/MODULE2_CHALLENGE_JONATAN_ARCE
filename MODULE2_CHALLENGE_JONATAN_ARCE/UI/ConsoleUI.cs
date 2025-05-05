@@ -36,7 +36,6 @@ namespace MODULE2_CHALLENGE_JONATAN_ARCE.UI
             _citaService = itaService;
         }
 
-
         private void Title()
         {
             Console.WriteLine("=====================================================");
@@ -130,7 +129,7 @@ namespace MODULE2_CHALLENGE_JONATAN_ARCE.UI
                         AppointmentHistorybyPatient();
                         break;
                     case "5":
-                        //AppointmentReportbyDatet();
+                        AppointmentReportbyDatet();
                         break;
                     case "0":
                         _isRunning2 = false;
@@ -144,6 +143,21 @@ namespace MODULE2_CHALLENGE_JONATAN_ARCE.UI
                 Console.ReadKey();
             }
             _isRunning2 = true;
+        }
+
+        private void AppointmentReportbyDatet()
+        {
+            Console.WriteLine("=== Report by Date ===");
+            Console.Write("-> date of birth (dd/mm/yyyy): ");
+            if (!DateTime.TryParse(Console.ReadLine(), out DateTime fecha))
+            {
+                Console.WriteLine("Invalid date format.");
+                return;
+            }
+
+            var citas = _citaService.GetQuotesForDate(fecha);
+            FormatResportCitas(citas);
+
         }
 
         private void AppointmentHistorybyPatient()
@@ -163,7 +177,7 @@ namespace MODULE2_CHALLENGE_JONATAN_ARCE.UI
             }
 
             Console.WriteLine($"--- History by Patient : {paciente.Id} {paciente.NombreCompleto} ---");
-            var citas = _citaService.GetQuotesForDentist(1);
+            var citas = _citaService.GetQuotesForDentist(pacienteId);
             FormatResportCitas(citas);
         }
 
@@ -355,7 +369,9 @@ namespace MODULE2_CHALLENGE_JONATAN_ARCE.UI
         private void ViewPatients()
         {
             var pacientes = _pacienteService.GetPatients();
-            Console.WriteLine("Id\tDni\t\tNombre\t\t\tFechaNacimiento\tTelefono\t\tEmail");  
+            Console.WriteLine("------------------------------------------------------------------------------------------------------------------------------");
+            Console.WriteLine("Id\tDni\t\tNombre\t\t\tFechaNacimiento\tTelefono\t\tEmail");
+            Console.WriteLine("------------------------------------------------------------------------------------------------------------------------------");
             foreach (var paciente in pacientes)
             {
                 Console.WriteLine($"{paciente.Id}" +
@@ -365,6 +381,7 @@ namespace MODULE2_CHALLENGE_JONATAN_ARCE.UI
                                 $"\t{paciente.Telefono}" +
                                 $"\t{paciente.Email}");
             }
+            Console.WriteLine("------------------------------------------------------------------------------------------------------------------------------");
         }
 
         //-------------------------------------------------------------------------
@@ -535,7 +552,9 @@ namespace MODULE2_CHALLENGE_JONATAN_ARCE.UI
         private void ViewDentist()
         {
             var odontologos = _odontologoService.GetDentists();
+            Console.WriteLine("------------------------------------------------------------------------------------------------------------------------------");
             Console.WriteLine("Id\tDni\t\tNumber_COP\tNombre\t\t\tEspecialidad\t\t\tFechaNacimiento\t\tStatus");
+            Console.WriteLine("------------------------------------------------------------------------------------------------------------------------------");
             foreach (var odontologo in odontologos)
             {
                 Console.WriteLine($"{odontologo.Id}" +
@@ -547,6 +566,7 @@ namespace MODULE2_CHALLENGE_JONATAN_ARCE.UI
                                 $"\t\t{odontologo.Estado}");
 
             }
+            Console.WriteLine("------------------------------------------------------------------------------------------------------------------------------");
         }
 
         private void CreateDentist()
@@ -924,7 +944,9 @@ namespace MODULE2_CHALLENGE_JONATAN_ARCE.UI
         private void ViewCitas()
         {
             var citas = _citaService.GetQuotes();
+            Console.WriteLine("------------------------------------------------------------------------------------------------------------------------------");
             Console.WriteLine("Id\tDate_Cita\t\tStatus\t\tPatient\t\t\tDentist\t\t\tMotive");
+            Console.WriteLine("------------------------------------------------------------------------------------------------------------------------------");
             foreach (var cita in citas)
             {
                 var odontologo =_odontologoService.GetDentistById(Convert.ToInt32(cita.idOdontologo));
@@ -936,10 +958,9 @@ namespace MODULE2_CHALLENGE_JONATAN_ARCE.UI
                                 $"\t{paciente.NombreCompleto}" +
                                 $"\t\t{odontologo.NombreCompleto}" +
                                 $"\t\t{cita.Motivo}");
-                                //$"\t\t{cita.FechaNacimiento.ToString("dd/MM/yyyy")} " +
-
 
             }
+            Console.WriteLine("------------------------------------------------------------------------------------------------------------------------------");
         }
     }
 }

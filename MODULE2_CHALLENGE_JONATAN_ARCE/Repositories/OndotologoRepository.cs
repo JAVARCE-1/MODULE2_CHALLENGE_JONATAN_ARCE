@@ -38,6 +38,30 @@ namespace MODULE2_CHALLENGE_JONATAN_ARCE.Repositories
                 Especialidad = TipoOdontologo.Especialista
             });
 
+            _dentist.Add(new Odontologo()
+            {
+                NombreCompleto = "Dr Dentist 1",
+                Dni = "48654565",
+                Sexo = Sexo.Masculino,
+                FechaNacimiento = new DateTime(1985, 11, 11),
+                Telefono = "94560045",
+                Email = "d1@correo",
+                numeroCOP = "10561",
+                Especialidad = TipoOdontologo.OdontologoGeneral
+            });
+
+            _dentist.Add(new Odontologo()
+            {
+                NombreCompleto = "Dr Dentist 2",
+                Dni = "88888888",
+                Sexo = Sexo.Masculino,
+                FechaNacimiento = new DateTime(1984, 11, 11),
+                Telefono = "99999999",
+                Email = "d2@correo",
+                numeroCOP = "10331",
+                Especialidad = TipoOdontologo.Especialista
+            });
+
         }
 
         public void Add(Odontologo entity)
