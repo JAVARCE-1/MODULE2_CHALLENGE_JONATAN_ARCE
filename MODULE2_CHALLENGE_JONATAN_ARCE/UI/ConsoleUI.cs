@@ -1,7 +1,7 @@
 ﻿using MODULE2_CHALLENGE_JONATAN_ARCE.Enums;
 using MODULE2_CHALLENGE_JONATAN_ARCE.Modelos;
 using MODULE2_CHALLENGE_JONATAN_ARCE.Services;
-using MODULE2_CHALLENGE_JONATAN_ARCE.Utilidades;
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -108,7 +108,7 @@ namespace MODULE2_CHALLENGE_JONATAN_ARCE.UI
                         CreatePatient();
                         break;
                     case "2":
-
+                        ModifyPatient();
                         break;
                     case "3":
                         ViewPatients();
@@ -123,6 +123,45 @@ namespace MODULE2_CHALLENGE_JONATAN_ARCE.UI
                 }
                 Console.WriteLine("\nPress any key to continue...");
                 Console.ReadKey();
+            }
+        }
+
+        private void ModifyPatient()
+        {
+            Console.WriteLine("=== Modify Patient ===");
+
+            Console.Write("-> Enter Patient ID: ");
+            if (!int.TryParse(Console.ReadLine(), out int pacienteId))
+            {
+                Console.WriteLine("Invalid ID format.");
+                return;
+            }
+
+            var paciente = _pacienteService.GetPatientById(pacienteId);
+            if (paciente == null)
+            {
+                Console.WriteLine("Patient not found.");
+                return;
+            }
+
+            Console.Write("-> Phone number: ");
+            var phone = Console.ReadLine();
+
+            Console.Write("-> Email: ");
+            var email = Console.ReadLine();
+
+            Console.Write("\nAre you sure to save the changes? (y/n): ");
+            var confirm = Console.ReadLine().ToLower();
+
+            if (confirm == "y" || confirm == "yes")
+            {
+                paciente.Email = email;
+                paciente.Telefono = phone;
+                Console.Write("Changes saved...");
+            }
+            else
+            {
+                Console.WriteLine("Operation cancelled.");
             }
         }
 
@@ -176,10 +215,15 @@ namespace MODULE2_CHALLENGE_JONATAN_ARCE.UI
         private void ViewPatients()
         {
             var pacientes = _pacienteService.GetPatients();
-            Console.WriteLine("Id\tDni\t\tNombre\t\t\tFechaNacimiento");  
+            Console.WriteLine("Id\tDni\t\tNombre\t\t\tFechaNacimiento\tTelefono\t\tEmail");  
             foreach (var paciente in pacientes)
             {
-                Console.WriteLine($"{paciente.Id}\t{paciente.Dni}\t{paciente.NombreCompleto}\t{paciente.FechaNacimiento.ToString("dd/MM/yyyy")}");
+                Console.WriteLine($"{paciente.Id}" +
+                                $"\t{paciente.Dni}" +
+                                $"\t{paciente.NombreCompleto}" +
+                                $"\t{paciente.FechaNacimiento.ToString("dd/MM/yyyy")} " +
+                                $"\t{paciente.Telefono}" +
+                                $"\t{paciente.Email}");
             }
         }
         //-------------------------------------------------------------------------

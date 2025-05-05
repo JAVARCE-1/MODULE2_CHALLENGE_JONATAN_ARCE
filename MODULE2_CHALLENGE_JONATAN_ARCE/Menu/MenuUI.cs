@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Channels;
 using System.Threading.Tasks;
 
-namespace MODULE2_CHALLENGE_JONATAN_ARCE.Utilidades
+namespace MODULE2_CHALLENGE_JONATAN_ARCE.Menu
 {
     public class MenuUI
     {
