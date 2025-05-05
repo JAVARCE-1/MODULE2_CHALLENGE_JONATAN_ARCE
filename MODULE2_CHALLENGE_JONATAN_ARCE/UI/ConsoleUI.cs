@@ -20,6 +20,9 @@ namespace MODULE2_CHALLENGE_JONATAN_ARCE.UI
     public class ConsoleUI
     {
         private bool _isRunning = true;
+        private bool _isRunning2 = true;
+        private bool _isRunningSub = true;
+
         private readonly IPacienteService _pacienteService;
         private readonly IOdontologoService _odontologoService;
         private readonly ICitaService _citaService;
@@ -94,7 +97,7 @@ namespace MODULE2_CHALLENGE_JONATAN_ARCE.UI
 
         private void MenuManagePatients()
         {
-            while (_isRunning)
+            while (_isRunning2)
             {
                 Console.Clear();
                 Console.WriteLine("===== Manage Patients =====");
@@ -119,7 +122,7 @@ namespace MODULE2_CHALLENGE_JONATAN_ARCE.UI
                         ViewPatients();
                         break;
                     case "4":
-                        _isRunning = false;
+                        _isRunning2 = false;
                         Console.WriteLine("Closed Manage Patients...!");
                         break;
                     default:
@@ -231,7 +234,7 @@ namespace MODULE2_CHALLENGE_JONATAN_ARCE.UI
         //-------------------------------------------------------------------------
         public void MenuManageDentists()
         {
-            while (_isRunning)
+            while (_isRunning2)
             {
                 Console.Clear();
                 Console.WriteLine("===== Manage Dentists =====");
@@ -260,7 +263,7 @@ namespace MODULE2_CHALLENGE_JONATAN_ARCE.UI
                         ViewDentist();
                         break;
                     case "5":
-                        _isRunning = false;
+                        _isRunning2 = false;
                         Console.WriteLine("Closed Manage Dentists...!");
                         break;
                     default:
@@ -461,18 +464,14 @@ namespace MODULE2_CHALLENGE_JONATAN_ARCE.UI
 
         public void MenuDentalAppointment()
         {
-            while (_isRunning)
+            while (_isRunning2)
             {
                 Console.Clear();
                 Console.WriteLine("==== Manage Dental appointment ====");
                 Console.WriteLine("  1. Create Dental appointment");
                 Console.WriteLine("  2. Modify Dental appointment");
-                Console.WriteLine("  3. Replace dentist,");
-                Console.WriteLine("  4. End Appointment,"); //terminar
-                Console.WriteLine("  5. Postpone Appointment,");  //postergar
-                Console.WriteLine("  6. Cancel Appointment,"); //anular
-                Console.WriteLine("  7. View Dentist");
-                Console.WriteLine("  8. Return");
+                Console.WriteLine("  3. View Dentist");
+                Console.WriteLine("  4. Return");
                 Console.WriteLine("------------------------------------");
                 Console.Write("Enter option: ");
 
@@ -484,25 +483,13 @@ namespace MODULE2_CHALLENGE_JONATAN_ARCE.UI
                         CreateCitas();
                         break;
                     case "2":
-                        //selecionar opcion;;
+                        ModifyCita();
                         break;
                     case "3":
-                        //selecionar opcion;
-                        break;
-                    case "4":
-                        //selecionar opcion;
-                        break;
-                    case "5":
-                        //selecionar opcion;
-                        break;
-                    case "6":
-                        //selecionar opcion;
-                        break;
-                    case "7":
                         ViewCitas();
                         break;
-                    case "8":
-                        _isRunning = false;
+                    case "4":
+                        _isRunning2 = false;
                         Console.WriteLine("Closed Dental appointment...!");
                         break;
                     default:
@@ -514,6 +501,95 @@ namespace MODULE2_CHALLENGE_JONATAN_ARCE.UI
             }
         }
 
+        private void ModifyCita()
+        {
+            while (_isRunningSub)
+            {
+                Console.Clear();
+                Console.WriteLine("==== Modify Dental appointment ====");
+                Console.WriteLine("  1. Replace dentist");
+                Console.WriteLine("  2. End Appointment"); //terminar
+                Console.WriteLine("  3. Postpone Appointment");  //postergar
+                Console.WriteLine("  4. Cancel Appointment"); //anular
+                Console.WriteLine("  5. Return");
+                Console.WriteLine("------------------------------------");
+                Console.Write("Enter option: ");
+
+                var option = Console.ReadLine();
+                Console.WriteLine("");
+                switch (option)
+                {
+                    case "1":
+                        replaceDentist();
+                        break;
+                    case "2":
+                        //ClosedCita();
+                        break;
+                    case "3":
+                        //PostponeCitas();
+                        break;
+                    case "4":
+                        //CancelCitas();
+                        break;
+                    case "5":
+                        _isRunningSub = false;
+                        Console.WriteLine("Closed Modify Dental appointment...!");
+                        break;
+                    default:
+                        Console.WriteLine("Invalid option.");
+                        break;
+                }
+                Console.WriteLine("\nPress any key to continue...");
+                Console.ReadKey();
+            }
+        }
+
+        private void replaceDentist()
+        {
+            Console.Write("-> Enter Cita ID: ");
+            if (!int.TryParse(Console.ReadLine(), out int citaId) || citaId <= 0)
+            {
+                Console.WriteLine("Invalid ID format.");
+                return;
+            }
+            var cita = _citaService.GetQuotesById(citaId);
+            if (cita == null)
+            {
+                Console.WriteLine("Cita not found.");
+                return;
+            }
+
+            Console.WriteLine($" Appointment data: {cita.IdCita} - {cita.Motivo} {cita.FechaCita}");
+
+            Console.Write("-> Enter Dentist ID changed: ");
+            if (!int.TryParse(Console.ReadLine(), out int odontologoId) || odontologoId <= 0)
+            {
+                Console.WriteLine("Invalid ID format.");
+                return;
+            }
+            var odontologo = _odontologoService.GetDentistById(odontologoId);
+            if (odontologo == null)
+            {
+                Console.WriteLine("Dentist not found.");
+                return;
+            }
+
+            //cambiar dentista
+            Console.Write("\nAre you sure to save the changes? (y/n): ");
+            var confirm = Console.ReadLine().ToLower();
+
+            if (confirm == "y" || confirm == "yes")
+            {
+                cita.idOdontologo = odontologoId;
+                Console.Write("Changes saved...");
+            }
+            else
+            {
+                Console.WriteLine("Operation cancelled.");
+            }
+
+        }
+
         private void CreateCitas()
         {
             Console.WriteLine("=== Create Citas ===");
@@ -521,7 +597,7 @@ namespace MODULE2_CHALLENGE_JONATAN_ARCE.UI
             var motivoCita = Console.ReadLine();
 
             Console.Write("-> Date Cita (dd/MM/yyyy HH:mm): ");
-            if (!DateTime.TryParse(Console.ReadLine(), out DateTime fechaCita))
+            if (!DateTime.TryParse(Console.ReadLine(), out DateTime fechaCita) || fechaCita < DateTime.Today)
             {
                 Console.WriteLine("Invalid date format.");
                 return;
@@ -578,7 +654,7 @@ namespace MODULE2_CHALLENGE_JONATAN_ARCE.UI
             };
 
             var registraCita = _citaService.CreateQuote(cita);
-            Console.WriteLine($"Cita created with ID: {cita.IdPaciente}");
+            Console.WriteLine($"Cita created with ID: {cita.IdCita}");
 
 
 
@@ -587,7 +663,7 @@ namespace MODULE2_CHALLENGE_JONATAN_ARCE.UI
         private void ViewCitas()
         {
             var citas = _citaService.GetQuotes();
-            Console.WriteLine("Id\tFecha_Cita\t\tStatus\t\tPaciente\t\tMotivo");
+            Console.WriteLine("Id\tDate_Cita\t\tStatus\t\tPatient\t\t\tDentist\t\t\tMotive");
             foreach (var cita in citas)
             {
                 var odontologo =_odontologoService.GetDentistById(Convert.ToInt32(cita.idOdontologo));
@@ -597,6 +673,7 @@ namespace MODULE2_CHALLENGE_JONATAN_ARCE.UI
                                 $"\t{cita.FechaCita}" +
                                 $"\t{cita.EstadoCita}" +
                                 $"\t{paciente.NombreCompleto}" +
+                                $"\t\t{odontologo.NombreCompleto}" +
                                 $"\t\t{cita.Motivo}");
                                 //$"\t\t{cita.FechaNacimiento.ToString("dd/MM/yyyy")} " +
 
