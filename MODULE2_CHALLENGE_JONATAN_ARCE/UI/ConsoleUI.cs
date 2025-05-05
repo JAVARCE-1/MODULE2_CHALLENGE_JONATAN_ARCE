@@ -131,7 +131,7 @@ namespace MODULE2_CHALLENGE_JONATAN_ARCE.UI
             Console.WriteLine("=== Modify Patient ===");
 
             Console.Write("-> Enter Patient ID: ");
-            if (!int.TryParse(Console.ReadLine(), out int pacienteId))
+            if (!int.TryParse(Console.ReadLine(), out int pacienteId) || pacienteId <= 0)
             {
                 Console.WriteLine("Invalid ID format.");
                 return;
@@ -168,8 +168,6 @@ namespace MODULE2_CHALLENGE_JONATAN_ARCE.UI
         private void CreatePatient()
         {
             Console.WriteLine("=== Create Patient ===");
-
-            //
             Console.Write("-> Number Expedient: ");
             var numExpediente = Console.ReadLine();
 
@@ -179,7 +177,7 @@ namespace MODULE2_CHALLENGE_JONATAN_ARCE.UI
             Console.Write("-> DNI: ");
             var dni = Console.ReadLine();
 
-            Console.Write("-> Cite date (dd/mm/yyyy): ");
+            Console.Write("-> date of birth (dd/mm/yyyy): ");
             if (!DateTime.TryParse(Console.ReadLine(), out DateTime fechaNacimiento))
             {
                 Console.WriteLine("Invalid date format.");
@@ -189,7 +187,6 @@ namespace MODULE2_CHALLENGE_JONATAN_ARCE.UI
             Console.Write("-> Sexo (0-Femenino , 1-Masculino): ");
             Sexo sexo = (Sexo)Convert.ToInt32(Console.ReadLine()); ;
             //if (!Enum.TryParse(Console.ReadLine(), out Sexo sexo))
-
 
             Console.Write("-> Phone number: ");
             var phone = Console.ReadLine();
@@ -246,13 +243,16 @@ namespace MODULE2_CHALLENGE_JONATAN_ARCE.UI
                 switch (option)
                 {
                     case "1":
-                        //selecionar opcion;
+                        CreateDentist();
                         break;
                     case "2":
-                        //selecionar opcion;
+                        ModifyDentist();
                         break;
                     case "3":
-                        //selecionar opcion;
+                        //RemoveStatusDentist();
+                        break;
+                    case "4":
+                        ViewDentist();
                         break;
                     case "5":
                         _isRunning = false;
@@ -266,6 +266,113 @@ namespace MODULE2_CHALLENGE_JONATAN_ARCE.UI
                 Console.ReadKey();
 
             }
+        }
+
+        private void ModifyDentist()
+        {
+            Console.WriteLine("=== Modify Dentist ===");
+
+            Console.Write("-> Enter Dentist ID: ");
+            if (!int.TryParse(Console.ReadLine(), out int odontologoId) || odontologoId <= 0)
+            {
+                Console.WriteLine("Invalid ID format.");
+                return;
+            }
+
+            var odontologo = _odontologoService.GetDentistById(odontologoId);
+            if (odontologo == null)
+            {
+                Console.WriteLine("Patient not found.");
+                return;
+            }
+
+            Console.Write("-> Type of Dentist (0-General , 1-Especialista): ");
+            TipoOdontologo typeDentist = (TipoOdontologo)Convert.ToInt32(Console.ReadLine()); ;
+
+            Console.Write("-> Phone number: ");
+            var phone = Console.ReadLine();
+
+            Console.Write("-> Email: ");
+            var email = Console.ReadLine();
+
+            Console.Write("\nAre you sure to save the changes? (y/n): ");
+            var confirm = Console.ReadLine().ToLower();
+
+            if (confirm == "y" || confirm == "yes")
+            {
+                odontologo.Email = email;
+                odontologo.Telefono = phone;
+                odontologo.Especialidad= typeDentist;
+                Console.Write("Changes saved...");
+            }
+            else
+            {
+                Console.WriteLine("Operation cancelled.");
+            }
+        }
+
+        private void ViewDentist()
+        {
+            var odontologos = _odontologoService.GetDentists();
+            Console.WriteLine("Id\tDni\t\tNumber_COP\tNombre\t\t\tEspecialidad\t\t\tFechaNacimiento\t\tStatus");
+            foreach (var odontologo in odontologos)
+            {
+                Console.WriteLine($"{odontologo.Id}" +
+                                $"\t{odontologo.Dni}" +
+                                $"\t{odontologo.numeroCOP}" +
+                                $"\t\t{odontologo.NombreCompleto}" +
+                                $"\t\t{odontologo.Especialidad}" +
+                                $"\t\t{odontologo.FechaNacimiento.ToString("dd/MM/yyyy")} " +
+                                $"\t\t{odontologo.Estado}");
+
+            }
+        }
+
+        private void CreateDentist()
+        {
+            Console.WriteLine("=== Create Dentist ===");
+            Console.Write("-> Number COP: ");
+            var numberCop = Console.ReadLine();
+
+            Console.Write("-> Patient full name: ");
+            var fullName = Console.ReadLine();
+
+            Console.Write("-> DNI: ");
+            var dni = Console.ReadLine();
+
+            Console.Write("-> Type of Dentist (0-General , 1-Especialista): ");
+            TipoOdontologo typeDentist = (TipoOdontologo)Convert.ToInt32(Console.ReadLine()); ;
+
+            Console.Write("-> date of birth (dd/mm/yyyy): ");
+            if (!DateTime.TryParse(Console.ReadLine(), out DateTime fechaNacimiento))
+            {
+                Console.WriteLine("Invalid date format.");
+                return;
+            }
+
+            Console.Write("-> Sexo (0-Femenino , 1-Masculino): ");
+            Sexo sexo = (Sexo)Convert.ToInt32(Console.ReadLine()); ;
+
+            Console.Write("-> Phone number: ");
+            var phone = Console.ReadLine();
+
+            Console.Write("-> Email: ");
+            var email = Console.ReadLine();
+
+            Odontologo dentista = new Odontologo()
+            {
+                NombreCompleto = fullName,
+                Dni = dni,
+                Sexo = sexo,
+                FechaNacimiento = fechaNacimiento,
+                Telefono = phone,
+                Email = email,
+                numeroCOP = numberCop
+            };
+
+            var registraDentista = _odontologoService.GetCreateDentist(dentista);
+            Console.WriteLine($"Dentist created with ID: {registraDentista.Id}");
+            
         }
 
         //-------------------------------------------------------------------------

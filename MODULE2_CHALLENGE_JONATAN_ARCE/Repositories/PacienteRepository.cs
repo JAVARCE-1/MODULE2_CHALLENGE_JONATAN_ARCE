@@ -12,8 +12,6 @@ namespace MODULE2_CHALLENGE_JONATAN_ARCE.Repositories
 
     {
 
-
-
         private List<Paciente> _patient = new List<Paciente>();
 
         public PacienteRepository()
@@ -28,6 +26,29 @@ namespace MODULE2_CHALLENGE_JONATAN_ARCE.Repositories
                 Telefono = "9995433",
                 Email = "pedro@correo",
                 NumeroExpediente = "001"
+            });
+
+            _patient.Add(new Paciente()
+            {
+                NombreCompleto = "Maria Campos ",
+                Dni = "45566430",
+                Sexo = Sexo.Masculino,
+                FechaNacimiento = new DateTime(2002, 2, 2),
+                Telefono = "90949303",
+                Email = "maria@correo",
+                NumeroExpediente = "002",
+                IsRecurrente=true
+            });
+
+            _patient.Add(new Paciente()
+            {
+                NombreCompleto = "Jose Ramos ",
+                Dni = "43556664",
+                Sexo = Sexo.Masculino,
+                FechaNacimiento = new DateTime(1988, 6, 11),
+                Telefono = "6565645",
+                Email = "jose@correo",
+                NumeroExpediente = "003"
             });
         }
 

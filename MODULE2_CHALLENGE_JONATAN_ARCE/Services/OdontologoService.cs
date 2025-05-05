@@ -26,7 +26,7 @@ namespace MODULE2_CHALLENGE_JONATAN_ARCE.Services
         public Odontologo GetCreateDentist(Odontologo odontologo)
         {
             var newOdontologo = _odontologoRepository.GetByNumeroCop(odontologo.numeroCOP);
-            if (newOdontologo != null )
+            if (newOdontologo == null)
             {
                 newOdontologo = new Odontologo
                 {
@@ -36,8 +36,9 @@ namespace MODULE2_CHALLENGE_JONATAN_ARCE.Services
                     Telefono = odontologo.Telefono,
                     Email = odontologo.Email,
                     Especialidad = odontologo.Especialidad,
-                    numeroCOP=odontologo.numeroCOP
+                    numeroCOP = odontologo.numeroCOP
                 };
+                _odontologoRepository.Add(newOdontologo);
             }
             return newOdontologo;
         }
