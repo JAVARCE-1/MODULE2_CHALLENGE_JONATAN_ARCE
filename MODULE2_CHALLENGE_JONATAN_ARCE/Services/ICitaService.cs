@@ -25,6 +25,6 @@ namespace MODULE2_CHALLENGE_JONATAN_ARCE.Services
 
         List<Cita> GetQuotesForDentist(int dentistId);
 
-
+        List<Cita> GetQuotesForPatient(int patientId);
     }
 }

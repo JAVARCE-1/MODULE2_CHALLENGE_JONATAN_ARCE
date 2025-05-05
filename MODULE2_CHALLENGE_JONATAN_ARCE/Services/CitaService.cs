@@ -56,6 +56,11 @@ namespace MODULE2_CHALLENGE_JONATAN_ARCE.Services
             return _citaRepository.GetByListQuotesForDentistID(dentistId);
         }
 
+        public List<Cita> GetQuotesForPatient(int patientId)
+        {
+            return _citaRepository.GetByListQuotesForPatientID(patientId);
+        }
+
         public List<Cita> GetQuotesStatus(EstadoCita estadoCita)
         {
             return _citaRepository.GetByStatusQuotes(estadoCita).ToList();
