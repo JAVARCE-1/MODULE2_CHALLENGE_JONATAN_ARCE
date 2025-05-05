@@ -523,13 +523,13 @@ namespace MODULE2_CHALLENGE_JONATAN_ARCE.UI
                         replaceDentist();
                         break;
                     case "2":
-                        //ClosedCita();
+                        ClosedCita();
                         break;
                     case "3":
-                        //PostponeCitas();
+                        PostponeCitas();
                         break;
                     case "4":
-                        //CancelCitas();
+                        CancelCitas();
                         break;
                     case "5":
                         _isRunningSub = false;
@@ -544,8 +544,9 @@ namespace MODULE2_CHALLENGE_JONATAN_ARCE.UI
             }
         }
 
-        private void replaceDentist()
+        private void CancelCitas()
         {
+            Console.WriteLine("=== Cancel Appointment ===");
             Console.Write("-> Enter Cita ID: ");
             if (!int.TryParse(Console.ReadLine(), out int citaId) || citaId <= 0)
             {
@@ -559,8 +560,136 @@ namespace MODULE2_CHALLENGE_JONATAN_ARCE.UI
                 return;
             }
 
-            Console.WriteLine($" Appointment data: {cita.IdCita} - {cita.Motivo} {cita.FechaCita}");
+            Console.WriteLine($" Appointment data: ID {cita.IdCita} - Motive: {cita.Motivo} ");
+            Console.WriteLine($"                 : Date: {cita.FechaCita} - Status: {cita.EstadoCita}");
 
+            Console.Write("-> Add Comment: ");
+            var comentario = Console.ReadLine();
+
+
+            Console.Write("\nAre you sure to save the changes? (y/n): ");
+            var confirm = Console.ReadLine().ToLower();
+
+            if (confirm == "y" || confirm == "yes")
+            {
+                cita.Comentarios.Add(comentario);
+                cita.EstadoCita = EstadoCita.Anulado;
+                cita.FechaUpdate = DateTime.Today;
+                Console.WriteLine($"Changes saved... ID: {cita.IdCita} -  {cita.EstadoCita}");
+            }
+            else
+            {
+                Console.WriteLine("Operation cancelled.");
+            }
+
+        }
+
+        private void PostponeCitas()
+        {
+            Console.WriteLine("=== Postpone Appointment ===");
+            Console.Write("-> Enter Cita ID: ");
+            if (!int.TryParse(Console.ReadLine(), out int citaId) || citaId <= 0)
+            {
+                Console.WriteLine("Invalid ID format.");
+                return;
+            }
+            var cita = _citaService.GetQuotesById(citaId);
+            if (cita == null)
+            {
+                Console.WriteLine("Cita not found.");
+                return;
+            }
+
+            Console.WriteLine($" Appointment data: ID {cita.IdCita} - Motive: {cita.Motivo} ");
+            Console.WriteLine($"                 : Date: {cita.FechaCita} - Status: {cita.EstadoCita}");
+
+
+            Console.Write("-> New date Cita to reschedule (dd/MM/yyyy HH:mm:00): ");
+            if (!DateTime.TryParse(Console.ReadLine(), out DateTime fechaReprogramada) || fechaReprogramada < DateTime.Today)
+            {
+                Console.WriteLine("Invalid date format.");
+                return;
+            }
+
+            Console.Write("\nAre you sure to save the changes? (y/n): ");
+            var confirm = Console.ReadLine().ToLower();
+
+            if (confirm == "y" || confirm == "yes")
+            {
+                cita.FechaCita = fechaReprogramada;
+                cita.FechaUpdate = DateTime.Today;
+                Console.WriteLine($"Changes saved... ID: {cita.IdCita} - date {fechaReprogramada}");
+            }
+            else
+            {
+                Console.WriteLine("Operation cancelled.");
+            }
+
+        }
+
+        private void ClosedCita()
+        {
+            Console.WriteLine("=== Closed Appointment ===");
+            Console.Write("-> Enter Cita ID: ");
+            if (!int.TryParse(Console.ReadLine(), out int citaId) || citaId <= 0)
+            {
+                Console.WriteLine("Invalid ID format.");
+                return;
+            }
+            var cita = _citaService.GetQuotesById(citaId);
+            if (cita == null)
+            {
+                Console.WriteLine("Cita not found.");
+                return;
+            }
+
+            Console.WriteLine($" Appointment data: ID {cita.IdCita} - Motive: {cita.Motivo} ");
+            Console.WriteLine($"                 : Date: {cita.FechaCita} - Status: {cita.EstadoCita}");
+
+            if (cita.EstadoCita == EstadoCita.Programado)
+            {
+                Console.Write("\nAre you sure to save the changes? (y/n): ");
+                var confirm = Console.ReadLine().ToLower();
+
+                if (confirm == "y" || confirm == "yes")
+                {
+                    cita.EstadoCita = EstadoCita.Terminado;
+                    cita.Diagnostico = new List<string> { "Se curo el diente " };
+                    cita.Recomendaciones = new List<string> { "1 Debe lavarse los dientes" };
+                    cita.FechaUpdate = DateTime.Today;
+                    Console.WriteLine($"Changes saved... ID {cita.IdCita} Closed");
+                }
+                else
+                {
+                    Console.WriteLine("Operation cancelled.");
+                }
+            }
+            else
+            {
+                Console.WriteLine("the appointment with pending status.");
+            }
+        }
+
+        private void replaceDentist()
+        {
+            Console.WriteLine("=== Replace Dentist ===");
+            Console.Write("-> Enter Cita ID: ");
+            if (!int.TryParse(Console.ReadLine(), out int citaId) || citaId <= 0)
+            {
+                Console.WriteLine("Invalid ID format.");
+                return;
+            }
+            var cita = _citaService.GetQuotesById(citaId);
+            if (cita == null)
+            {
+                Console.WriteLine("Cita not found.");
+                return;
+            }
+
+            Console.WriteLine($" Appointment data: ID {cita.IdCita} - Motive: {cita.Motivo} ");
+            Console.WriteLine($"                 : Date: {cita.FechaCita} - Status: {cita.EstadoCita}"); ;
+
+            //Reemplazo
             Console.Write("-> Enter Dentist ID changed: ");
             if (!int.TryParse(Console.ReadLine(), out int odontologoId) || odontologoId <= 0)
             {
