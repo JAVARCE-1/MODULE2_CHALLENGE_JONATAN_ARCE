@@ -9,6 +9,8 @@ namespace MODULE2_CHALLENGE_JONATAN_ARCE.Modelos
 {
     public class Cita
     {
+        private static int _nextId = 1;
+
         public int IdCita {  get; private set; }
         public string Motivo { get; set; }
         public DateTime FechaCita { get; set; }
@@ -22,7 +24,11 @@ namespace MODULE2_CHALLENGE_JONATAN_ARCE.Modelos
         public List<string> Diagnostico { get; set; }
         public List<string> Recomendaciones { get; set; }
 
-        
+        public Cita()
+        {
+            IdCita = _nextId++;
+        }
+
 
 
     }

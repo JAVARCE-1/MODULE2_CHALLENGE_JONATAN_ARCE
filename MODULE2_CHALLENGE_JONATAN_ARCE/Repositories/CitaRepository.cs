@@ -11,6 +11,31 @@ namespace MODULE2_CHALLENGE_JONATAN_ARCE.Repositories
     class CitaRepository : ICitaRepository
     {
         private List<Cita> _quotes = new List<Cita>();
+
+        public CitaRepository()
+        {
+            _quotes.Add(new Cita()
+            {
+                Motivo = "Limpiezas dentales",
+                FechaCita = new DateTime(2024, 5, 15, 14, 30, 0),  // 15/05/2023 14:30:00
+                IdPaciente = 1,
+                idOdontologo = 1,
+                CostoCita = 100.00m,
+                Comentarios= new List<string> { "Es su Primera cita"  }
+            });
+
+            _quotes.Add(new Cita()
+            {
+                Motivo = "Ajuste de brackets ",
+                FechaCita = new DateTime(2024, 5, 14, 14, 30, 0),  
+                IdPaciente = 2,
+                idOdontologo = 2,
+                CostoCita = 250.00m,
+                Comentarios = new List<string> { "Primer comentario", "Segundo comentario" }
+            });
+
+        }
+
         public void Add(Cita entity)
         {
             _quotes.Add(entity);

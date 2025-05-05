@@ -22,7 +22,6 @@ namespace MODULE2_CHALLENGE_JONATAN_ARCE.Modelos
         public DateTime FechaRegistro { get; set; } = DateTime.Now;
         public DateTime? FechaModificacion { get; set; }
 
- 
 
         public virtual void DatoPersona()
         {

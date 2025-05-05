@@ -6,7 +6,9 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Net.Sockets;
+using System.Numerics;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Channels;
@@ -479,7 +481,7 @@ namespace MODULE2_CHALLENGE_JONATAN_ARCE.UI
                 switch (option)
                 {
                     case "1":
-                        //selecionar opcion;
+                        CreateCitas();
                         break;
                     case "2":
                         //selecionar opcion;;
@@ -497,7 +499,7 @@ namespace MODULE2_CHALLENGE_JONATAN_ARCE.UI
                         //selecionar opcion;
                         break;
                     case "7":
-                        //selecionar opcion;
+                        ViewCitas();
                         break;
                     case "8":
                         _isRunning = false;
@@ -512,5 +514,94 @@ namespace MODULE2_CHALLENGE_JONATAN_ARCE.UI
             }
         }
 
+        private void CreateCitas()
+        {
+            Console.WriteLine("=== Create Citas ===");
+            Console.Write("-> Motive Cita: ");
+            var motivoCita = Console.ReadLine();
+
+            Console.Write("-> Date Cita (dd/MM/yyyy HH:mm): ");
+            if (!DateTime.TryParse(Console.ReadLine(), out DateTime fechaCita))
+            {
+                Console.WriteLine("Invalid date format.");
+                return;
+            }
+
+            //DENTIST
+            Console.Write("-> Enter Dentist ID: ");
+            if (!int.TryParse(Console.ReadLine(), out int odontologoId) || odontologoId <= 0)
+            {
+                Console.WriteLine("Invalid ID format.");
+                return;
+            }
+
+            var odontologoSelect = _odontologoService.GetDentistById(odontologoId);
+            if (odontologoSelect == null)
+            {
+                Console.WriteLine("Dentist not found.");
+                return;
+            }
+
+            //PACIENTE
+            Console.Write("-> Enter Patient ID: ");
+            if (!int.TryParse(Console.ReadLine(), out int pacienteID) || pacienteID <= 0)
+            {
+                Console.WriteLine("Invalid ID format.");
+                return;
+            }
+
+            var pacienteElect = _pacienteService.GetPatientById(pacienteID);
+            if (pacienteElect == null)
+            {
+                Console.WriteLine("Patient not found.");
+                return;
+            }
+
+            Console.Write("-> Cost cita: ");
+            if (!decimal.TryParse(Console.ReadLine(), out decimal costo) || costo <= 0)
+            {
+                Console.WriteLine("Invalid ID format.");
+                return;
+            }
+
+            Console.Write("-> Comentary: ");
+            var comentario = Console.ReadLine();
+
+            Cita cita = new Cita()
+            {
+                Motivo = motivoCita,
+                FechaCita = fechaCita,   
+                IdPaciente = pacienteID,
+                idOdontologo = odontologoId,
+                CostoCita = costo,
+                Comentarios = new List<string> { comentario }
+            };
+
+            var registraCita = _citaService.CreateQuote(cita);
+            Console.WriteLine($"Cita created with ID: {cita.IdPaciente}");
+
+
+
+        }
+
+        private void ViewCitas()
+        {
+            var citas = _citaService.GetQuotes();
+            Console.WriteLine("Id\tFecha_Cita\t\tStatus\t\tPaciente\t\tMotivo");
+            foreach (var cita in citas)
+            {
+                var odontologo =_odontologoService.GetDentistById(Convert.ToInt32(cita.idOdontologo));
+                var paciente = _pacienteService.GetPatientById(Convert.ToInt32(cita.IdPaciente));
+
+                Console.WriteLine($"{cita.IdCita}" +
+                                $"\t{cita.FechaCita}" +
+                                $"\t{cita.EstadoCita}" +
+                                $"\t{paciente.NombreCompleto}" +
+                                $"\t\t{cita.Motivo}");
+                                //$"\t\t{cita.FechaNacimiento.ToString("dd/MM/yyyy")} " +
+
+
+            }
+        }
     }
 }
