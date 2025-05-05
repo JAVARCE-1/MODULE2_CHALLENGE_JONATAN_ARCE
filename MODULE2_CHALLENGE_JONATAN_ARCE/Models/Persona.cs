@@ -19,14 +19,15 @@ namespace MODULE2_CHALLENGE_JONATAN_ARCE.Modelos
         public string Telefono { get; set; }
         public string Email { get; set; }
         public Estado Estado { get; set; } = Estado.Activo;
-        public string FechaRegistro { get; set; } = DateTime.Now.ToString("dd-MM-yyyy HH:mm:ss");
-        public string? FechaModificacion { get; set; }
+        public DateTime FechaRegistro { get; set; } = DateTime.Now;
+        public DateTime? FechaModificacion { get; set; }
 
  
 
         public virtual void DatoPersona()
         {
-            Console.WriteLine($" Datos : {NombreCompleto} con DNI {Dni} con fecha de nacimiento {FechaNacimiento}, genero {Sexo}");
+            Console.WriteLine($" Data person : {NombreCompleto} DNI: {Dni} date of birth: {FechaNacimiento.ToString("dd/MM/yyyy")},");
+            Console.WriteLine($" Genero: {Sexo}  - status: {Estado}");
         }
 
 

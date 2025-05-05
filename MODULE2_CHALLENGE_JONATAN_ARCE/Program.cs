@@ -11,7 +11,7 @@ namespace MODULE2_CHALLENGE_JONATAN_ARCE
         static void Main(string[] args)
         {
             var odontologoService = new OdontologoService(new OndotologoRepository());
-            var citaService = new CitaService(new CitaRepository());
+            var citaService = new CitaService(new CitaRepository(), new OndotologoRepository());
             var pacienteService = new PacienteService(new PacienteRepository(), new CitaRepository());
 
             var ui = new ConsoleUI(pacienteService, odontologoService, citaService);

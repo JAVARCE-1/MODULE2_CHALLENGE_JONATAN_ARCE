@@ -12,7 +12,7 @@ namespace MODULE2_CHALLENGE_JONATAN_ARCE.Repositories
     {
         Odontologo GetByNumeroCop(string numeroCOP);
 
-        Odontologo GetByTypeDentist(TipoOdontologo typeDentist);
+       List<Odontologo> GetByTypeDentist(TipoOdontologo typeDentist);
 
         
 

@@ -3,12 +3,15 @@ using MODULE2_CHALLENGE_JONATAN_ARCE.Modelos;
 using MODULE2_CHALLENGE_JONATAN_ARCE.Services;
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Sockets;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Channels;
 using System.Threading.Tasks;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace MODULE2_CHALLENGE_JONATAN_ARCE.UI
 {
@@ -17,7 +20,7 @@ namespace MODULE2_CHALLENGE_JONATAN_ARCE.UI
         private bool _isRunning = true;
         private readonly IPacienteService _pacienteService;
         private readonly IOdontologoService _odontologoService;
-        private readonly ICitaService _itaService;
+        private readonly ICitaService _citaService;
 
         public ConsoleUI(IPacienteService pacienteService, 
             IOdontologoService odontologoService, 
@@ -25,7 +28,7 @@ namespace MODULE2_CHALLENGE_JONATAN_ARCE.UI
         {
             _pacienteService = pacienteService;
             _odontologoService = odontologoService;
-            _itaService = itaService;
+            _citaService = itaService;
         }
 
 
@@ -249,7 +252,7 @@ namespace MODULE2_CHALLENGE_JONATAN_ARCE.UI
                         ModifyDentist();
                         break;
                     case "3":
-                        //RemoveStatusDentist();
+                        RemoveStatusDentist();
                         break;
                     case "4":
                         ViewDentist();
@@ -268,6 +271,83 @@ namespace MODULE2_CHALLENGE_JONATAN_ARCE.UI
             }
         }
 
+        private void RemoveStatusDentist()
+        {
+            int newDentist=-1;
+            Console.WriteLine("=== Remove Dentist ===");
+
+            Console.Write("-> Enter Dentist ID: ");
+            if (!int.TryParse(Console.ReadLine(), out int odontologoId) || odontologoId <= 0)
+            {
+                Console.WriteLine("Invalid ID format.");
+                return;
+            }
+
+            var odontologo = _odontologoService.GetDentistById(odontologoId);
+            if (odontologo == null)
+            {
+                Console.WriteLine("Dentist not found.");
+                return;
+            }
+            odontologo.DatoPersona(); //print
+
+            var citasXDentist = _citaService.GetQuotesForDentist(odontologoId); //cantidad de citas por dentista
+            int cantcitasForDentist = citasXDentist.Count;
+
+
+            Console.Write("\nAre you sure you want to save the dentist status change? (y/n): ");
+            var confirm = Console.ReadLine().ToLower();
+
+            if (confirm == "y" || confirm == "yes")
+            {
+                odontologo.Estado = Estado.Inactivo;
+                odontologo.FechaModificacion = DateTime.Today;
+
+                if (cantcitasForDentist >= 1)
+                {
+                    var allCitas = _citaService.GetQuotes();
+                    var allDentist = _odontologoService.GetDentists();
+                    int minimo = 1;
+
+                    for (int i = 0; i < allDentist.Count; i++)
+                    {
+                        if (allDentist[i].Id != odontologo.Id && allDentist[i].Especialidad == odontologo.Especialidad)
+                        {
+                            var contarCita = allCitas.Where(x => x.idOdontologo == allDentist[i].Id
+                                            && x.EstadoCita == EstadoCita.Postergado
+                                            && x.EstadoCita == EstadoCita.Programado
+                                            && x.FechaCita >= DateTime.Now
+                                           ).Count();
+                            if (contarCita < minimo)
+                            {
+                                //obtener el dentista con menos citas
+                                minimo = contarCita;
+                                newDentist = allDentist[i].Id;
+                            }
+
+                        }
+
+                    }
+
+                    //reemplazar
+                    for (int i = 0; i < citasXDentist.Count; i++)
+                    {
+                        if (citasXDentist[i].idOdontologo == odontologoId)
+                            citasXDentist[i].idOdontologo = newDentist;
+                    }
+                }
+
+
+                Console.Write("Changes saved...");
+            }
+            else
+            {
+                Console.WriteLine("Operation cancelled.");
+            }
+            
+
+        }
+
         private void ModifyDentist()
         {
             Console.WriteLine("=== Modify Dentist ===");
@@ -282,7 +362,7 @@ namespace MODULE2_CHALLENGE_JONATAN_ARCE.UI
             var odontologo = _odontologoService.GetDentistById(odontologoId);
             if (odontologo == null)
             {
-                Console.WriteLine("Patient not found.");
+                Console.WriteLine("Dentist not found.");
                 return;
             }
 

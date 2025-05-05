@@ -17,8 +17,14 @@ namespace MODULE2_CHALLENGE_JONATAN_ARCE.Services
 
         Cita GetQuotesById(int citaID);
 
-        List<Cita> GetQuotes(EstadoCita estadoCita);
+        List<Cita> GetQuotes();
+
+        List<Cita> GetQuotesStatus(EstadoCita estadoCita);
 
         List<Cita> GetQuotesForDate(DateTime fechaCita);
+
+        List<Cita> GetQuotesForDentist(int dentistId);
+
+
     }
 }

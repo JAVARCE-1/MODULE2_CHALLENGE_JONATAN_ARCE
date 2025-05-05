@@ -20,6 +20,8 @@ namespace MODULE2_CHALLENGE_JONATAN_ARCE.Repositories
 
         List<Cita> GetByListQuotesForDentistID(int dentistID);
 
+  
 
+         
     }
 }

@@ -20,5 +20,11 @@ namespace MODULE2_CHALLENGE_JONATAN_ARCE.Modelos
             Id = _nextIdOdontologo++;
         }
 
+        public override void DatoPersona()
+        {
+            base.DatoPersona( ) ;
+            Console.WriteLine($" Number COP: {numeroCOP} , Type:{Especialidad}");
+        }
+
     }
 }

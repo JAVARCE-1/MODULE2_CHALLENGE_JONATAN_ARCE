@@ -13,10 +13,12 @@ namespace MODULE2_CHALLENGE_JONATAN_ARCE.Services
     public class CitaService : ICitaService
     {
         private readonly ICitaRepository _citaRepository;
+        private readonly IOdontologoRepository _odontologoRepository;
 
-        public CitaService(ICitaRepository citaRepository)
+        public CitaService(ICitaRepository citaRepository, IOdontologoRepository odontologoRepository)
         {
-            this._citaRepository = citaRepository;
+            _citaRepository = citaRepository;
+            _odontologoRepository = odontologoRepository;
         }
 
         public bool CreateQuote(Cita cita)
@@ -33,9 +35,10 @@ namespace MODULE2_CHALLENGE_JONATAN_ARCE.Services
             }
         }
 
-        public List<Cita> GetQuotes(EstadoCita estadoCita)
+
+        public List<Cita> GetQuotes()
         {
-            return _citaRepository.GetByStatusQuotes(estadoCita).ToList();
+            return _citaRepository.GetAll().ToList();
         }
 
         public Cita GetQuotesById(int citaID)
@@ -46,6 +49,16 @@ namespace MODULE2_CHALLENGE_JONATAN_ARCE.Services
         public List<Cita> GetQuotesForDate(DateTime fechaCita)
         {
             return _citaRepository.GetByDateQuotes(fechaCita).ToList();
+        }
+
+        public List<Cita> GetQuotesForDentist(int dentistId)
+        {
+            return _citaRepository.GetByListQuotesForDentistID(dentistId);
+        }
+
+        public List<Cita> GetQuotesStatus(EstadoCita estadoCita)
+        {
+            return _citaRepository.GetByStatusQuotes(estadoCita).ToList();
         }
 
         public bool UpdateQuote(Cita cita)

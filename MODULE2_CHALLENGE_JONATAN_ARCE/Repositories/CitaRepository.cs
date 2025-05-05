@@ -56,6 +56,8 @@ namespace MODULE2_CHALLENGE_JONATAN_ARCE.Repositories
             return _quotes.Where(x => x.EstadoCita == estadoCita).ToList();
         }
 
+
+
         public void Update(Cita entity)
         {
             var index = _quotes.FindIndex(x => x.IdCita == entity.IdCita);

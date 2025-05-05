@@ -65,9 +65,9 @@ namespace MODULE2_CHALLENGE_JONATAN_ARCE.Repositories
             return _dentist.FirstOrDefault(x => x.numeroCOP == numeroCOP);
         }
 
-        public Odontologo GetByTypeDentist(TipoOdontologo typeDentist)
+        public List<Odontologo> GetByTypeDentist(TipoOdontologo typeDentist)
         {
-            return _dentist.FirstOrDefault(x => x.Especialidad == typeDentist);
+            return _dentist.Where(x => x.Especialidad == typeDentist).ToList();
         }
 
         public void Update(Odontologo entity)
