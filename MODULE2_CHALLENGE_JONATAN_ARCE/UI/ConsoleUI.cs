@@ -27,8 +27,8 @@ namespace MODULE2_CHALLENGE_JONATAN_ARCE.UI
         private readonly IOdontologoService _odontologoService;
         private readonly ICitaService _citaService;
 
-        public ConsoleUI(IPacienteService pacienteService, 
-            IOdontologoService odontologoService, 
+        public ConsoleUI(IPacienteService pacienteService,
+            IOdontologoService odontologoService,
             ICitaService itaService)
         {
             _pacienteService = pacienteService;
@@ -89,8 +89,6 @@ namespace MODULE2_CHALLENGE_JONATAN_ARCE.UI
                         break;
                 }
 
-                //Console.WriteLine("\nPress any key to continue...");
-                //Console.ReadKey();
                 Console.Clear();
                 Title();
             }
@@ -215,7 +213,7 @@ namespace MODULE2_CHALLENGE_JONATAN_ARCE.UI
             Console.WriteLine($"--- Report : {EstadoCita.Programado} ---");
             FormatResportCitas(citas);
         }
-        private void  FormatResportCitas(List<Cita> citas)
+        private void FormatResportCitas(List<Cita> citas)
         {
 
             Console.WriteLine("------------------------------------------------------------------------------------------------------------------------------");
@@ -278,7 +276,7 @@ namespace MODULE2_CHALLENGE_JONATAN_ARCE.UI
                 }
                 Console.WriteLine("\nPress any key to continue...");
                 Console.ReadKey();
-                
+
             }
             _isRunning2 = true;
         }
@@ -431,7 +429,7 @@ namespace MODULE2_CHALLENGE_JONATAN_ARCE.UI
 
         private void RemoveStatusDentist()
         {
-            int newDentist=-1;
+            int newDentist = -1;
             Console.WriteLine("=== Remove Dentist ===");
 
             Console.Write("-> Enter Dentist ID: ");
@@ -502,7 +500,7 @@ namespace MODULE2_CHALLENGE_JONATAN_ARCE.UI
             {
                 Console.WriteLine("Operation cancelled.");
             }
-            
+
 
         }
 
@@ -540,7 +538,7 @@ namespace MODULE2_CHALLENGE_JONATAN_ARCE.UI
             {
                 odontologo.Email = email;
                 odontologo.Telefono = phone;
-                odontologo.Especialidad= typeDentist;
+                odontologo.Especialidad = typeDentist;
                 Console.Write("Changes saved...");
             }
             else
@@ -613,7 +611,7 @@ namespace MODULE2_CHALLENGE_JONATAN_ARCE.UI
 
             var registraDentista = _odontologoService.GetCreateDentist(dentista);
             Console.WriteLine($"Dentist created with ID: {registraDentista.Id}");
-            
+
         }
         //-------------------------------------------------------------------------
         public void MenuDentalAppointment()
@@ -930,7 +928,7 @@ namespace MODULE2_CHALLENGE_JONATAN_ARCE.UI
             Cita cita = new Cita()
             {
                 Motivo = motivoCita,
-                FechaCita = fechaCita,   
+                FechaCita = fechaCita,
                 IdPaciente = pacienteID,
                 idOdontologo = odontologoId,
                 CostoCita = costo,
@@ -949,7 +947,7 @@ namespace MODULE2_CHALLENGE_JONATAN_ARCE.UI
             Console.WriteLine("------------------------------------------------------------------------------------------------------------------------------");
             foreach (var cita in citas)
             {
-                var odontologo =_odontologoService.GetDentistById(Convert.ToInt32(cita.idOdontologo));
+                var odontologo = _odontologoService.GetDentistById(Convert.ToInt32(cita.idOdontologo));
                 var paciente = _pacienteService.GetPatientById(Convert.ToInt32(cita.IdPaciente));
 
                 Console.WriteLine($"{cita.IdCita}" +
