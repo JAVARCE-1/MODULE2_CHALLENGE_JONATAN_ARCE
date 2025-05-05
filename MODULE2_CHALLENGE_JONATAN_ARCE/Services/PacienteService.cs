@@ -29,6 +29,7 @@ namespace MODULE2_CHALLENGE_JONATAN_ARCE.Services
                 newPaciente = new Paciente
                 {
                     NombreCompleto = paciente.NombreCompleto,
+                    Dni= paciente.Dni,
                     Sexo = paciente.Sexo,
                     FechaNacimiento = paciente.FechaNacimiento,
                     Telefono = paciente.Telefono,

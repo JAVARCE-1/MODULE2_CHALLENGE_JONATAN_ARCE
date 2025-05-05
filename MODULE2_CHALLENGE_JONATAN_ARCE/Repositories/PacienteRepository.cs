@@ -1,4 +1,5 @@
-﻿using MODULE2_CHALLENGE_JONATAN_ARCE.Modelos;
+﻿using MODULE2_CHALLENGE_JONATAN_ARCE.Enums;
+using MODULE2_CHALLENGE_JONATAN_ARCE.Modelos;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +11,28 @@ namespace MODULE2_CHALLENGE_JONATAN_ARCE.Repositories
     class PacienteRepository : IPacienteRepository
 
     {
-        List<Paciente> _patient = new List<Paciente>();
+
+
+
+        private List<Paciente> _patient = new List<Paciente>();
+
+        public PacienteRepository()
+        {
+
+            _patient.Add(new Paciente()
+            {
+                NombreCompleto = "Pedro Cesar Flores ",
+                Dni = "45963848",
+                Sexo = Sexo.Masculino,
+                FechaNacimiento = new DateTime(1988, 1, 1),
+                Telefono = "9995433",
+                Email = "pedro@correo",
+                NumeroExpediente = "001"
+            });
+        }
+
+
+
         public void Add(Paciente entity)
         {
             _patient.Add(entity);

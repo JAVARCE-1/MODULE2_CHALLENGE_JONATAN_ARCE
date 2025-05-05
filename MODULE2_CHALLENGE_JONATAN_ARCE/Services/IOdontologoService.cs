@@ -13,6 +13,6 @@ namespace MODULE2_CHALLENGE_JONATAN_ARCE.Services
         Odontologo GetDentistById(int id);
         List<Odontologo> GetDentists();
         Odontologo GetDentistByNumberCOP(string numeroCop);
-        List<Cita> GetQuotesForDentist(int odontologoId);
+        //List<Cita> GetQuotesForDentist(int odontologoId);
     }
 }

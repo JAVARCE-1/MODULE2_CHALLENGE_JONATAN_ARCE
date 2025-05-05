@@ -14,13 +14,13 @@ namespace MODULE2_CHALLENGE_JONATAN_ARCE.Modelos
         public int Id { get;  protected set; }
         public string Dni { get; set; }
         public string NombreCompleto { get; set; }
-        public string Sexo { get; set; }
+        public Sexo Sexo { get; set; }
         public DateTime FechaNacimiento { get; set; }
         public string Telefono { get; set; }
         public string Email { get; set; }
         public Estado Estado { get; set; } = Estado.Activo;
-        public string FechaRegistro { get; set; } = DateTime.Now.ToString("dd-MM-YYYY");
-        public string FechaModificacion { get; set; }
+        public string FechaRegistro { get; set; } = DateTime.Now.ToString("dd-MM-yyyy HH:mm:ss");
+        public string? FechaModificacion { get; set; }
 
  
 

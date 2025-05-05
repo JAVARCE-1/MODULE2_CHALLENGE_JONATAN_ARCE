@@ -13,7 +13,7 @@ namespace MODULE2_CHALLENGE_JONATAN_ARCE.Modelos
         private static int _nextIdPaciente = 1;
 
         public string NumeroExpediente { get; set; }
-        public List<Cita> CitaHistorial {  get; set; }
+        public List<Cita>? CitaHistorial {  get; set; }
         public bool IsRecurrente { get; set; } = false;
 
         public Paciente()

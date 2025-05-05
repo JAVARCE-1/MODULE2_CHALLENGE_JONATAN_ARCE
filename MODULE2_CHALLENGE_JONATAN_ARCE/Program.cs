@@ -1,4 +1,7 @@
-﻿using MODULE2_CHALLENGE_JONATAN_ARCE.Utilidades;
+﻿using MODULE2_CHALLENGE_JONATAN_ARCE.Repositories;
+using MODULE2_CHALLENGE_JONATAN_ARCE.Services;
+using MODULE2_CHALLENGE_JONATAN_ARCE.UI;
+using MODULE2_CHALLENGE_JONATAN_ARCE.Utilidades;
 using System.Threading.Channels;
 
 namespace MODULE2_CHALLENGE_JONATAN_ARCE
@@ -7,12 +10,13 @@ namespace MODULE2_CHALLENGE_JONATAN_ARCE
     {
         static void Main(string[] args)
         {
+            var odontologoService = new OdontologoService(new OndotologoRepository());
+            var citaService = new CitaService(new CitaRepository());
+            var pacienteService = new PacienteService(new PacienteRepository(), new CitaRepository());
 
+            var ui = new ConsoleUI(pacienteService, odontologoService, citaService);
 
-            MenuUI menu = new MenuUI();
-
-
-            menu.Run();
+            ui.StartRunning();
         }
     }
 }

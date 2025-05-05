@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace MODULE2_CHALLENGE_JONATAN_ARCE.Repositories
 {
-    public class OndotologoRepository : IOdontologoRepository
+     class OndotologoRepository : IOdontologoRepository
     {
         private List<Odontologo> _dentist = new List<Odontologo>();
 
